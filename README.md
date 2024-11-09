@@ -1,68 +1,77 @@
-# :package_description
+# This is my package has-nano-id-laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/james322/has-nano-id-laravel.svg?style=flat-square)](https://packagist.org/packages/james322/has-nano-id-laravel)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/james322/has-nano-id-laravel/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/james322/has-nano-id-laravel/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/james322/has-nano-id-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/james322/has-nano-id-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/james322/has-nano-id-laravel.svg?style=flat-square)](https://packagist.org/packages/james322/has-nano-id-laravel)
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+A php trait to add [Nano IDs](https://github.com/ai/nanoid) to Laravel models.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require james322/has-nano-id-laravel
 ```
 
-You can publish and run the migrations with:
+Publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
+php artisan vendor:publish --tag="has-nano-id-laravel-config"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
+
+    'alphabet' => env('NANO_ID_ALPHABET', '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-'),
+
+    'size' => (int) env('NANO_ID_SIZE', 21)
 ];
 ```
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
-```
 
 ## Usage
+In your model import the trait and add the column to your database table you wish to use for the Nano ID.
 
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+use james322\HasNanoId\HasNanoId;
+
+class User
+{
+    use HasNanoId;
+}
+```
+Now when the model is created for the first time a Nano ID will be generated.
+
+The database column used for storing the Nano ID can be customized by adding a $nano_id_key property on your model.
+
+```php
+use james322\HasNanoId\HasNanoId;
+
+class User
+{
+    use HasNanoId;
+
+    public $nano_id_key = 'custom_column'; // default 'public_key'
+}
+```
+
+The default alphabet and size (length) of the nano id can be customized in the nano-id.php config file. You can also customize it on a per model basis by adding $nano_id_alphabet and $nano_id_size property to your model.
+
+```php
+use james322\HasNanoId\HasNanoId;
+
+class User
+{
+    use HasNanoId;
+
+    public $nano_id_alphabet = 'abcdefg1234567890-'; // default '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz-'
+
+    public $nano_id_size = 14; // default 21
+}
 ```
 
 ## Testing
@@ -74,19 +83,6 @@ composer test
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
 
 ## License
 

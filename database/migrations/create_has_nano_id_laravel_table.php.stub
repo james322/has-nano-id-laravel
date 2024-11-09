@@ -8,10 +8,10 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('migration_table_name_table', function (Blueprint $table) {
+        Schema::create('has_nano_id_laravel_table', function (Blueprint $table) {
             $table->id();
 
-            // add fields
+            $table->string('public_id');
 
             $table->timestamps();
         });

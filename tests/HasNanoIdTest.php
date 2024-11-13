@@ -17,7 +17,17 @@ test('A model with HasNanoId will save with a nano id', function () {
 
     ]);
 
-    expect($model->public_id)->toBeString();
+    expect($model->public_id)->toBeString()->not()->toBeEmpty();
+    expect(strlen($model->public_id))->toBe(config('nano-id.size'));
+});
+
+test('nano id cannot be empty string', function () {
+    $model = Model::create([
+        'public_id' => '   ',
+    ]);
+
+    expect($model->public_id)->toBeString()->not()->toBeEmpty();
+    expect(strlen($model->public_id))->toBe(config('nano-id.size'));
 });
 
 test('alphabet can be customized by model', function () {
@@ -49,4 +59,13 @@ test('nano id key can be customized by model', function () {
     expect($model->getNanoKey())
         ->toBe($nanoKey)
         ->not()->toBe($oldNanoKey);
+});
+
+test('manually set nano id wont be overridden', function () {
+    $publicId = 'test-nano';
+    $model = Model::create([
+        'public_id' => $publicId,
+    ]);
+
+    expect($model->public_id)->toBe($publicId);
 });

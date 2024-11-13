@@ -9,6 +9,9 @@ trait HasNanoId
     public static function bootHasNanoId(): void
     {
         static::creating(function ($model) {
+            if (isset($model[$model->getNanoKey()]) && trim($model[$model->getNanoKey()]) != '') {
+                return;
+            }
             $model[$model->getNanoKey()] = (new Client)->formatedId($model->getNanoAlphabet(), $model->getNanoSize());
         });
     }

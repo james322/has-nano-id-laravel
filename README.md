@@ -1,4 +1,4 @@
-# This is my package has-nano-id-laravel
+# has-nano-id-laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/james322/has-nano-id-laravel.svg?style=flat-square)](https://packagist.org/packages/james322/has-nano-id-laravel)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/james322/has-nano-id-laravel/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/james322/has-nano-id-laravel/actions?query=workflow%3Arun-tests+branch%3Amain)

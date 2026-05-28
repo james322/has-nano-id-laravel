@@ -2,6 +2,7 @@
 
 namespace james322\HasNanoId;
 
+use james322\HasNanoId\Commands\NanoModelCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,6 +18,7 @@ class HasNanoIdServiceProvider extends PackageServiceProvider
         $package
             ->name('has-nano-id-laravel')
             ->hasConfigFile('nano-id')
-            ->hasMigration('create_has_nano_id_laravel_table');
+            ->hasMigration('create_has_nano_id_laravel_table')
+            ->hasCommand(NanoModelCommand::class);
     }
 }

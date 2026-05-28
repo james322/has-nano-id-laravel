@@ -46,6 +46,38 @@ class User
 ```
 Now when the model is created for the first time a Nano ID will be generated.
 
+### Generating a Nano ID model
+
+You can create a model and migration with the `nano:model` Artisan command:
+
+```bash
+php artisan nano:model User
+```
+
+This creates an `App\Models\User` model and a timestamped `create_users_table` migration. The generated migration includes a string `public_key` column for storing the Nano ID:
+
+```php
+$table->string('public_key');
+```
+
+The generated model uses the `HasNanoId` trait and sets the Nano ID key to `public_key`.
+
+Model names follow Laravel's usual namespace conventions:
+
+```bash
+php artisan nano:model Admin/User
+```
+
+This creates `app/Models/Admin/User.php` and a migration for the `users` table.
+
+To generate inside another `App` namespace, prefix the model name with `App`:
+
+```bash
+php artisan nano:model App/Domain/User
+```
+
+This creates `app/Domain/User.php`.
+
 The database column used for storing the Nano ID can be customized by adding a $nano_id_key property on your model.
 
 ```php

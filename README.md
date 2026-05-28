@@ -37,9 +37,10 @@ return [
 In your model import the trait and add the column to your database table you wish to use for the Nano ID.
 
 ```php
+use Illuminate\Database\Eloquent\Model;
 use james322\HasNanoId\HasNanoId;
 
-class User
+class User extends Model
 {
     use HasNanoId;
 }
@@ -81,9 +82,10 @@ This creates `app/Domain/User.php`.
 The database column used for storing the Nano ID can be customized by adding a $nano_id_key property on your model.
 
 ```php
+use Illuminate\Database\Eloquent\Model;
 use james322\HasNanoId\HasNanoId;
 
-class User
+class User extends Model
 {
     use HasNanoId;
 
@@ -94,9 +96,10 @@ class User
 The default alphabet and size (length) of the nano id can be customized in the nano-id.php config file. You can also customize it on a per model basis by adding $nano_id_alphabet and $nano_id_size property to your model.
 
 ```php
+use Illuminate\Database\Eloquent\Model;
 use james322\HasNanoId\HasNanoId;
 
-class User
+class User extends Model
 {
     use HasNanoId;
 
